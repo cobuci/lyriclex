@@ -1,11 +1,12 @@
-<div class="p-4  flex flex-col gap-2">
-  <p>
-    {{ title }}
-  </p>
-  <input type="text" class="border-2 border-gray-400 p-2" [(ngModel)]="title" />
-  <button class="bg-blue-500 text-white p-2" (click)="searchMusic(title)">Search</button>
+<div class="p-4 flex flex-col gap-2">
 
-  <div *ngFor="let item of resultados" class="mb-6 flex border-2 justify-between border-black rounded-lg bg-gray-700 text-white">
+  <input type="text" class="border-2 border-gray-400 p-2" [(ngModel)]="title" />
+  <p>
+    Search: {{ title }}
+  </p>
+  <button class="bg-blue-500 text-white p-2 rounded-lg" (click)="searchMusic(title)">Search</button>
+
+  <div *ngFor="let item of resultados" class="mb-6 flex h-32 max-h-32 border-2 justify-between border-black rounded-lg bg-gray-700 text-white">
     <div class="flex">
       <img width="100" class="rounded-l-lg"
         src="{{ item.image }}" alt="">
@@ -18,11 +19,10 @@
         </p>
       </div>
     </div>
-    <div class="self-end self h-28">
-      <button class="bg-blue-500 h-full text-white p-2 rounded-r-lg">Play</button>
+    <div class="self-end self h-full">
+      <button class="bg-blue-500 h-full text-white p-2 rounded-r-lg" (click)="getLyrics(item)" >Play</button>
     </div>
   </div>
-
 
   <!-- <div class="mb-6 flex border-2 justify-between border-black rounded-lg bg-gray-700 text-white">
     <div class="flex">

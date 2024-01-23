@@ -1,5 +1,7 @@
+import { Lyrics } from './../../models/lyrics';
 import { Component, OnInit } from '@angular/core';
 import { GeniusService } from '../../services/genius.service';
+import { LyricsService } from '../../services/lyrics.service';
 import { Genius } from '../../models/genius';
 
 @Component({
@@ -11,10 +13,16 @@ import { Genius } from '../../models/genius';
 export class TestComponent implements OnInit {
 
   title: string = ""
-  resultados: Genius[] = []
+  resultados: Genius[] = [];
+  lyrics: Lyrics;
 
-  constructor(private service: GeniusService) {
-
+  constructor(private service: GeniusService, private lyricsService: LyricsService) {
+    this.lyrics = {
+      id: 0,
+      title: "",
+      artist_names: "",
+      lyrics: ""
+    }
   }
 
   searchMusic(query: string) {
@@ -35,7 +43,25 @@ export class TestComponent implements OnInit {
       },
       error: err => console.log('Error', err)
     })
+  }
 
+  getLyrics(music: Genius) {
+    this.lyricsService.getLyrics(music.artist_names, music.title).subscribe({
+      next: (res: any) => {
+        if (res.type !== "song_notfound" && res.type !== "notfound") {
+          this.lyrics = {
+            id: music.id,
+            title: music.title,
+            artist_names: music.artist_names,
+            lyrics: res.mus[0].text
+          }
+          console.log(this.lyrics)
+        } else {
+          console.log("Não encontrado")
+        }
+      },
+
+    })
 
   }
 
