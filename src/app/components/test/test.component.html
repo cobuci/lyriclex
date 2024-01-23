@@ -1,7 +1,17 @@
-<div class="p-4 text-4xl">
-  <input type="text" class="border-2 border-gray-400 p-2"  />
+<div class="p-4 text-4xl flex flex-col gap-2">
   <p>
     {{ title }}
   </p>
+  <input type="text" class="border-2 border-gray-400 p-2" [(ngModel)]="title" />
+  <button class="bg-blue-500 text-white p-2" (click)="searchMusic(title)">Click Me</button>
+
+  <div *ngFor="let item of resultados" class="mb-6" >
+  <p>
+   Artista: {{ item.artist_names}}
+  </p>
+  <p>
+    Musica:  {{ item.title }}
+  </p>
+  </div>
 
 </div>
