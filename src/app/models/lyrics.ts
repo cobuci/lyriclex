@@ -3,6 +3,5 @@ export type Lyrics = {
   title: string,
   artist_names: string
   lyrics: string,
-
 }
 

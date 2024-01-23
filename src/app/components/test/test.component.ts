@@ -12,7 +12,7 @@ import { Genius } from '../../models/genius';
 
 export class TestComponent implements OnInit {
 
-  title: string = ""
+  query: string = ""
   resultados: Genius[] = [];
   lyrics: Lyrics;
 
@@ -66,8 +66,6 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
   }
 
 }
