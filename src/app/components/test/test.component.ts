@@ -3,6 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { GeniusService } from '../../services/genius.service';
 import { LyricsService } from '../../services/lyrics.service';
 import { Genius } from '../../models/genius';
+import { Router } from '@angular/router';
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-test',
@@ -14,15 +19,27 @@ export class TestComponent implements OnInit {
 
   query: string = ""
   resultados: Genius[] = [];
-  lyrics: Lyrics;
+  isDropdownOpen: boolean = false;
+  private searchSubject: Subject<string> = new Subject<string>();
 
-  constructor(private service: GeniusService, private lyricsService: LyricsService) {
-    this.lyrics = {
-      id: 0,
-      title: "",
-      artist_names: "",
-      lyrics: ""
-    }
+  constructor(private service: GeniusService, private lyricsService: LyricsService, private router: Router) {
+    this.searchSubject.pipe(debounceTime(800)).subscribe((query) => {
+      this.searchMusic(query);
+    });
+
+  }
+
+  toggleDropdown(event: Event) {
+    event.stopPropagation();
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
+  }
+
+  onInputChange() {
+    this.searchSubject.next(this.query);
   }
 
   searchMusic(query: string) {
@@ -32,40 +49,20 @@ export class TestComponent implements OnInit {
           return {
             id: hit.result.id,
             title: hit.result.title,
-            url: hit.result.url,
             artist_names: hit.result.primary_artist.name,
-            lyrics: hit.result.path,
-            image: hit.result.song_art_image_url
           };
-        }
-        )
-        console.log(this.resultados)
+        });
       },
       error: err => console.log('Error', err)
     })
   }
 
-  getLyrics(music: Genius) {
-    this.lyricsService.getLyrics(music.artist_names, music.title).subscribe({
-      next: (res: any) => {
-        if (res.type !== "song_notfound" && res.type !== "notfound") {
-          this.lyrics = {
-            id: music.id,
-            title: music.title,
-            artist_names: music.artist_names,
-            lyrics: res.mus[0].text
-          }
-          console.log(this.lyrics)
-        } else {
-          console.log("Não encontrado")
-        }
-      },
-
-    })
-
+  showLyrics(music: Genius) {
+    this.query = "";
+    this.resultados = [];
+    this.router.navigate(['/lyrics'], { queryParams: { music: JSON.stringify(music) } });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

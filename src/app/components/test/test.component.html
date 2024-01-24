@@ -1,45 +1,16 @@
-<div class="p-4 flex flex-col gap-2">
+<!-- search.component.html -->
+<div class="relative mx-4 " (document:click)="closeDropdown()">
+  <input type="text"
+    class="border bg-[#090c11] focus:bg-white/[0.04] border-gray-900 text-gray-400 p-2 md:w-32 md:hover:w-auto focus:w-auto rounded-lg  transition-all hover:duration-1000 ease-in-out"
+    [(ngModel)]="query" (input)="onInputChange()" (click)="toggleDropdown($event)" placeholder="Search..." />
 
-  <input type="text" class="border-2 border-gray-400 p-2" [(ngModel)]="query" />
-  <p>
-    Search: {{ query }}
-  </p>
-  <button class="bg-blue-500 text-white p-2 rounded-lg" (click)="searchMusic(query)">Search</button>
-
-  <div *ngFor="let item of resultados" class="mb-6 flex h-32 max-h-32 border-2 justify-between border-black rounded-lg bg-gray-700 text-white">
-    <div class="flex">
-      <img width="100" class="rounded-l-lg"
-        src="{{ item.image }}" alt="">
-      <div class="ml-6 flex flex-col justify-center text-2xl">
-        <p>
-          {{ item.title }}
-        </p>
-        <p>
-          {{ item.artist_names}}
-        </p>
-      </div>
-    </div>
-    <div class="self-end self h-full">
-      <button class="bg-blue-500 h-full text-white p-2 rounded-r-lg" (click)="getLyrics(item)" >Play</button>
-    </div>
+  <div *ngIf="resultados.length > 0 && isDropdownOpen"
+    class="absolute mt-2 bg-black/[0.75] text-white rounded-lg shadow-lg z-10 w-auto ">
+    <ul class="rounded-lg">
+      <li *ngFor="let result of resultados" class="hover:bg-white/[0.05] cursor-pointer p-4"
+        (click)="showLyrics(result)">
+        {{ result.title }} - {{ result.artist_names }}
+      </li>
+    </ul>
   </div>
-
-  <!-- <div class="mb-6 flex border-2 justify-between border-black rounded-lg bg-gray-700 text-white">
-    <div class="flex">
-      <img width="100" class="rounded-l-lg"
-        src="https://images.genius.com/1249e494550339f90167650654c2ba58.1000x1000x1.png" alt="">
-      <div class="ml-6 flex flex-col justify-center text-2xl">
-        <p>
-          Ciclano
-        </p>
-        <p>
-          Fulano
-        </p>
-      </div>
-    </div>
-    <div class="self-end self h-28">
-      <button class="bg-blue-500 h-full text-white p-2 rounded-r-lg">Play</button>
-    </div>
-  </div> -->
-
 </div>

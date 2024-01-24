@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { TestComponent } from './components/test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { IndexComponent } from './pages/lyrics/index/index.component';
+import { MenuComponent } from './shared/menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    TestComponent,
+    IndexComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

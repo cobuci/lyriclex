@@ -1,0 +1,27 @@
+<div class="text-white w-full max-w-full">
+  <p class="font-bold text-3xl flex justify-center my-6">
+    {{ Lyrics.artist_names }} - {{ Lyrics.title }}
+  </p>
+  <p *ngIf="hasTranslated === false" class="font-bold text-sm text-red-600 flex justify-center mb-8">This song has no
+    translation. </p>
+
+
+  <ng-container *ngFor="let ln of lyricsLines; let i = index" class="mx-4">
+    <div class="flex flex-col px-4 ">
+      <p *ngIf="ln !== '<br>' && ln != 'Chorus:'"
+        class="w-full mx-auto text-xl p-3 font-medium has-tooltip bg-black/[0.4] hover:bg-black/[0.6] border-black border-1 rounded-lg my-2">
+        {{ ln }}
+        <span class='tooltip shadow-lg p-2 bg-black/[0.95] border border-white/[0.3] rounded-lg text-[#8c52ff] mt-2  '>
+          {{lyricsTranslated[i]}}
+        </span>
+      </p>
+
+      <ng-container *ngIf="hasTranslated">
+        <input *ngIf="ln !== '<br>' && ln != 'Chorus:'" [(ngModel)]="lyricsInput[i]"
+          class="w-full mx-auto text-xl p-3 px-4  bg-black/[0.4] hover:bg-white/[0.1] rounded-lg my-2" />
+      </ng-container>
+
+    </div>
+    <br *ngIf="ln === '<br>'">
+  </ng-container>
+</div>

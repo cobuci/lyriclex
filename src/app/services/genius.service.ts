@@ -23,7 +23,7 @@ export class GeniusService {
       params: {
         q: query,
         access_token: environment.geniusToken,
-        per_page: "5"
+        per_page: "7"
       }
 
     });
