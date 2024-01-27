@@ -1,28 +1,25 @@
-import { Lyrics } from './../../models/lyrics';
+
 import { Component, OnInit } from '@angular/core';
 import { GeniusService } from '../../services/genius.service';
-import { LyricsService } from '../../services/lyrics.service';
+
 import { Genius } from '../../models/genius';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-
-
 @Component({
-  selector: 'app-test',
-  templateUrl: './test.component.html',
-  styleUrl: './test.component.css'
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.css'
 })
-
-export class TestComponent implements OnInit {
+export class SearchComponent {
 
   query: string = ""
   resultados: Genius[] = [];
   isDropdownOpen: boolean = false;
   private searchSubject: Subject<string> = new Subject<string>();
 
-  constructor(private service: GeniusService, private lyricsService: LyricsService, private router: Router) {
+  constructor(private service: GeniusService, private router: Router) {
     this.searchSubject.pipe(debounceTime(800)).subscribe((query) => {
       this.searchMusic(query);
     });
@@ -64,5 +61,4 @@ export class TestComponent implements OnInit {
   }
 
   ngOnInit(): void { }
-
 }

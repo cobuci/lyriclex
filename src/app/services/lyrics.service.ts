@@ -14,9 +14,6 @@ export class LyricsService {
 
   }
 
-  //https://api.lyrics.ovh/v1/Coldplay/Adventure%20of%20a%20Lifetime
-  //https://api.lyrics.ovh/v1/In%20Flames/Only%20for%20the%20Weak
-
   getLyrics(artist: string, song: string) {
     this.lyrics = this.http.get<any>(`${this.baseUrl}`,{
       params: {

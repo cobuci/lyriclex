@@ -1,20 +1,20 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestComponent } from './components/test/test.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { IndexComponent } from './pages/lyrics/index/index.component';
 import { MenuComponent } from './shared/menu/menu.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
     IndexComponent,
-    MenuComponent
+    MenuComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +22,8 @@ import { MenuComponent } from './shared/menu/menu.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [importProvidersFrom(HttpClientModule),
+  importProvidersFrom(HttpClientJsonpModule)],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,6 +4,8 @@ export const environment = {
   geniusToken: "SN34-YMgIjvXUyPjZjEQxhhGMLgDgX7YpdmO3PsAUdEk4JUzeH4EYAZXsRXV91mo",
 
   lyricsBaseUrl: "https://api.vagalume.com.br/search.php",
-  lyricsToken: "1ea8473eb3f160cbf7f4da019e54ed26"
+  lyricsToken: "1ea8473eb3f160cbf7f4da019e54ed26",
+
+  deeplUrl: "http://localhost:3000/",
 
 };

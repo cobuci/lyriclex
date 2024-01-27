@@ -1,0 +1,15 @@
+<!-- search.component.html -->
+<div class="" (document:click)="closeDropdown()">
+  <input type="text" class="input input-bordered w-auto md:w-full" [(ngModel)]="query" (input)="onInputChange()"
+    (click)="toggleDropdown($event)" placeholder="Search..." />
+
+  <div *ngIf="resultados.length > 0 && isDropdownOpen"
+    class="absolute mt-2 bg-base-100  text-white rounded-lg shadow-2xl z-10 w-auto ">
+    <ul class="rounded-lg">
+      <li *ngFor="let result of resultados" class="hover:bg-white/[0.05] cursor-pointer p-4"
+        (click)="showLyrics(result)">
+        {{ result.title }} - {{ result.artist_names }}
+      </li>
+    </ul>
+  </div>
+</div>

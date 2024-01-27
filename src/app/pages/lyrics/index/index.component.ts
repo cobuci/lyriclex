@@ -2,8 +2,8 @@ import { Lyrics } from './../../../models/lyrics';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LyricsService } from '../../../services/lyrics.service';
-import { Genius } from '../../../models/genius';
-
+import { TranslateService } from '../../../services/translate.service';
+import { Translate } from '../../../models/translate';
 
 @Component({
   selector: 'app-index',
@@ -12,7 +12,6 @@ import { Genius } from '../../../models/genius';
 })
 
 export class IndexComponent implements OnInit {
-
   Lyrics: Lyrics = {
     id: 0,
     title: '',
@@ -24,9 +23,13 @@ export class IndexComponent implements OnInit {
   lyricsLines: string[] = [];
   lyricsTranslated: string[] = [];
   lyricsInput: string[] = [];
-  hasTranslated: boolean = true;
+  displayOriginal: boolean[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private lyricsService: LyricsService) {
+  toggleTranslation(index: number): void {
+    this.displayOriginal[index] = !this.displayOriginal[index];
+  }
+
+  constructor(private route: ActivatedRoute, private lyricsService: LyricsService, private translateService: TranslateService) {
     this.route.queryParams.subscribe(params => {
       params = JSON.parse(params['music']);
       this.getLyrics(params);
@@ -42,9 +45,11 @@ export class IndexComponent implements OnInit {
             title: music.title,
             artist_names: music.artist_names,
             lyrics: res.mus[0].text,
-            translated: res.mus[0].translate ? res.mus[0].translate[0].text : undefined
+            translated: undefined
           }
           this.formatLyric();
+          this.translateLyric()
+          this.displayOriginal = Array(this.lyricsLines.length).fill(true);
         } else {
           console.log("Não encontrado")
         }
@@ -58,14 +63,28 @@ export class IndexComponent implements OnInit {
     const linhasDaMusica = this.Lyrics.lyrics.split('\n');
     this.lyricsLines = linhasDaMusica.map(linha => linha.trim() === '' ? '<br>' : linha);
 
-    if (this.Lyrics.translated) {
-      const linhasDaMusica = this.Lyrics.translated.split('\n');
-      this.lyricsTranslated = linhasDaMusica.map(linha => linha.trim() === '' ? '<br>' : linha);
-    } else {
-      this.hasTranslated = false;
-    }
   }
 
-  ngOnInit(): void { }
+  translateLyric(): void {
+    for (let i = 0; i < this.lyricsLines.length; i++) {
+      if (this.lyricsLines[i] === '<br>' || this.lyricsLines[i] === '') {
+
+        continue;
+      }
+      this.translateService.requestTranslate(this.lyricsLines[i]).subscribe({
+        next: (res: Translate) => {
+          this.lyricsTranslated[i] = res.translatedText.text;
+        },
+        error: err => console.log('Error', err)
+      })
+    }
+
+  }
+
+  ngOnInit(): void {
+
+
+
+  }
 
 }

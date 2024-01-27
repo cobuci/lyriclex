@@ -1,11 +1,27 @@
-<div class="bg-[#090c11]">
-  <ul class="flex  justify-between w-full items-center p-6 shadow-lg">
-    <li class="cursor-pointer">
-      <img [src]="logoUrl" alt="logo" class="w-14" routerLink="/">
-    </li>
-    <li class="self-center">
-      <app-test></app-test>
-    </li>
-    <li></li>
-  </ul>
+<div class="navbar bg-base-100 shadow-lg">
+  <div class="navbar-start w-[30%]">
+    <img [src]="logoUrl" alt="" width="44" class="cursor-pointer" routerLink="/">
+  </div>
+  <div class=" flex-1 ">
+    <app-search class="flex-1 md:px-4"></app-search>
+  </div>
+  <div class="navbar-end w-[30%]">
+    <div class="dropdown dropdown-end ">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          class="inline-block w-5 h-5 stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </div>
+      <!-- <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <li>
+          <a class="justify-between">
+            Profile
+          </a>
+        </li>
+        <li><a>Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul> -->
+    </div>
+  </div>
 </div>
