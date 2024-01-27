@@ -23,7 +23,6 @@ export class SearchComponent {
     this.searchSubject.pipe(debounceTime(800)).subscribe((query) => {
       this.searchMusic(query);
     });
-
   }
 
   toggleDropdown(event: Event) {
